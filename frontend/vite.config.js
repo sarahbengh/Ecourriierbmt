@@ -11,5 +11,6 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist', // Build output to serve from backend
+    emptyOutDir: true,
   }
 });
