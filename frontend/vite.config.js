@@ -10,6 +10,6 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: '../backend/public', // Build output to serve from backend
+    outDir: 'dist', // Build output to serve from backend
   }
 });
