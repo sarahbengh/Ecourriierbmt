@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  if (!API_BASE_URL) {
+    console.error("REACT_APP_API_BASE_URL n'est pas défini dans les variables d'environnement");
+  }
 const ListeContacts = () => {
   const [contacts, setContacts] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
@@ -8,7 +11,7 @@ const ListeContacts = () => {
 
   // Récupération des infos de l'utilisateur connecté
   useEffect(() => {
-    axios.get('http://localhost:5000/auth/me', {
+    axios.get(`${API_BASE_URL}/auth/me` , {
       withCredentials: true
     })
       .then(res => {
@@ -23,7 +26,7 @@ const ListeContacts = () => {
 
   // Récupération des contacts de l'utilisateur connecté
   const fetchContacts = () => {
-    axios.get('http://localhost:5000/view-contacts', {
+    axios.get(`${API_BASE_URL}/view-contacts` , {
       withCredentials: true
     })
       .then(res => {
@@ -36,7 +39,7 @@ const ListeContacts = () => {
   };
 
   const handleLogout = () => {
-    axios.post('http://localhost:5000/auth/logout', {}, { withCredentials: true })
+    axios.post(`${API_BASE_URL}/auth/logout` , {}, { withCredentials: true })
       .then(() => {
         setCurrentUser(null);
         window.location.href = "/";

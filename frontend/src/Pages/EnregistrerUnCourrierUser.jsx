@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import SidebarUser from '../components/SidebarUser';
 import { useNavigate } from 'react-router-dom';
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  if (!API_BASE_URL) {
+    console.error("REACT_APP_API_BASE_URL n'est pas défini dans les variables d'environnement");
+  }
 function getCookie(name) {
   const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
   if (match) return match[2];
@@ -32,7 +35,7 @@ const EnregistrerUnCourrier = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/auth/me', { withCredentials: true })
+    axios.get(`${API_BASE_URL}/auth/me` , { withCredentials: true })
       .then(res => setCurrentUser(res.data))
       .catch(err => console.error("Erreur récupération user connecté", err));
   }, []);
@@ -40,7 +43,7 @@ const EnregistrerUnCourrier = () => {
   const handleLogout = async () => {
     try {
       const csrfToken = getCookie('csrf_access_token');
-      const res = await axios.post('http://localhost:5000/auth/logout', {}, {
+      const res = await axios.post(`${API_BASE_URL}/auth/logout` , {}, {
         headers: { 'X-CSRF-TOKEN': csrfToken },
         withCredentials: true
       });
@@ -89,7 +92,7 @@ const handleSubmit = async (e) => {
     
     // Envoi de la requête POST avec axios
     const response = await axios.post(
-      'http://localhost:5000/courrier/save_courrier',
+      `${API_BASE_URL}/courrier/save_courrier` ,
       formData,
       {
         headers: { 'X-CSRF-TOKEN': csrfToken },

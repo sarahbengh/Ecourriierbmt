@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  if (!API_BASE_URL) {
+    console.error("REACT_APP_API_BASE_URL n'est pas défini dans les variables d'environnement");
+  }
 const AjouterUser = () => {
   const [formData, setFormData] = useState({
     nom: '',
@@ -16,7 +19,7 @@ const AjouterUser = () => {
   const [showPassword, setShowPassword] = useState(false); // 👈 pour afficher/masquer le mot de passe
 
   useEffect(() => {
-    axios.get('http://localhost:5000/auth/me', { withCredentials: true })
+    axios.get(`${API_BASE_URL}/auth/me` , { withCredentials: true })
       .then(res => setCurrentUser(res.data))
       .catch(err => {
         console.error("Erreur récupération user connecté", err);
@@ -32,7 +35,7 @@ const AjouterUser = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        'http://localhost:5000/auth/add_user',
+        `${API_BASE_URL}/auth/add_user`,
         formData,
         {
           withCredentials: true,

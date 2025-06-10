@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  if (!API_BASE_URL) {
+    console.error("REACT_APP_API_BASE_URL n'est pas défini dans les variables d'environnement");
+  }
 const AjouterContact = () => {
   const [formData, setFormData] = useState({
     nom_complet: '',
@@ -14,21 +17,22 @@ const AjouterContact = () => {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/auth/me', { withCredentials: true })
+    axios.get(`${API_BASE_URL}/auth/me` , { withCredentials: true })
       .then(res => setCurrentUser(res.data))
       .catch(err => {
         console.error("Erreur récupération user connecté", err);
       });
   }, []);
 
-  const handleLogout = async () => {
-    try {
-      await axios.post('http://localhost:5000/auth/logout', {}, { withCredentials: true });
-      window.location.href = "/";
-    } catch (err) {
-      console.error("Erreur lors de la déconnexion :", err);
-    }
-  };
+ const handleLogout = async () => {
+  try {
+    await axios.post(`${API_BASE_URL}/auth/logout`, {}, { withCredentials: true });
+    window.location.href = "/";
+  } catch (err) {
+    console.error("Erreur lors de la déconnexion :", err);
+  }
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,7 +48,15 @@ const AjouterContact = () => {
       };
 
       const res = await axios.post(
-        'http://localhost:5000/add-contact',
+       const handleLogout = async () => {
+  try {
+    await axios.post(`${API_BASE_URL}/auth/logout`, {}, { withCredentials: true });
+    window.location.href = "/";
+  } catch (err) {
+    console.error("Erreur lors de la déconnexion :", err);
+  }
+};
+add-contact',
         dataToSend,
         {
           withCredentials: true,

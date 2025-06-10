@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  if (!API_BASE_URL) {
+    console.error("REACT_APP_API_BASE_URL n'est pas défini dans les variables d'environnement");
+  }
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,7 +21,7 @@ const LoginPage = () => {
     setErreur('');
 
     try {
-      const res = await fetch('http://localhost:5000/auth/login', {
+      const res = await fetch(`${API_BASE_URL}/auth/login` , {
         method: 'POST',
         credentials: 'include',
         headers: {

@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import SidebarUser from '../components/SidebarUser'; // Réutilise ton composant si la sidebar est commune
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  if (!API_BASE_URL) {
+    console.error("REACT_APP_API_BASE_URL n'est pas défini dans les variables d'environnement");
+  }
 function getCookie(name) {
   const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
   if (match) return match[2];
@@ -15,7 +18,7 @@ const UserDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/auth/me', { withCredentials: true })
+    axios.get(`${API_BASE_URL}/auth/me` , { withCredentials: true })
       .then(res => setCurrentUser(res.data))
       .catch(err => {
         console.error("Erreur récupération user connecté", err);
@@ -28,7 +31,7 @@ const UserDashboard = () => {
   const handleLogout = async () => {
     try {
       const csrfToken = getCookie('csrf_access_token');
-      const res = await axios.post('http://localhost:5000/auth/logout', {}, {
+      const res = await axios.post(`${API_BASE_URL}/auth/logout` , {}, {
         headers: { 'X-CSRF-TOKEN': csrfToken },
         withCredentials: true
       });

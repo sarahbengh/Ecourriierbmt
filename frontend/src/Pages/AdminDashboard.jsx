@@ -14,13 +14,16 @@ function AdminDashboard() {
   const [currentUser, setCurrentUser] = useState(null);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  if (!API_BASE_URL) {
+    console.error("REACT_APP_API_BASE_URL n'est pas défini dans les variables d'environnement");
+  }
   useEffect(() => {
-    axios.get('http://localhost:5000/auth/me', { withCredentials: true })
+    axios.get(`${API_BASE_URL}/auth/me`, { withCredentials: true })
       .then(res => setCurrentUser(res.data))
       .catch(err => console.error("Erreur récupération user connecté", err));
 
-    axios.get('http://localhost:5000/auth/users', { withCredentials: true })
+    axios.get(`${API_BASE_URL}/auth/users` , { withCredentials: true })
       .then(res => setUtilisateurs(res.data.utilisateurs))
       .catch(err => {
         if (err.response?.status === 403) {
@@ -31,20 +34,21 @@ function AdminDashboard() {
       });
   }, [navigate]);
 
-  const handleLogout = async () => {
-    try {
-      const csrfToken = getCookie('csrf_access_token');
-      const res = await axios.post('http://localhost:5000/auth/logout', {}, {
-        headers: { 'X-CSRF-TOKEN': csrfToken },
-        withCredentials: true
-      });
-      alert(res.data.message);
-      navigate('/LoginPage');
-    } catch (err) {
-      console.error('Erreur de déconnexion:', err);
-      setError('Impossible de se déconnecter');
-    }
-  };
+ const handleLogout = async () => {
+  try {
+    const csrfToken = getCookie('csrf_access_token');
+    const res = await axios.post(`${API_BASE_URL}/auth/logout`, {}, {
+      headers: { 'X-CSRF-TOKEN': csrfToken },
+      withCredentials: true
+    });
+    alert(res.data.message);
+    navigate('/LoginPage');
+  } catch (err) {
+    console.error('Erreur de déconnexion:', err);
+    setError('Impossible de se déconnecter');
+  }
+};
+
 
   return (
     <div className="flex h-screen bg-gray-100">

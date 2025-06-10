@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  if (!API_BASE_URL) {
+    console.error("REACT_APP_API_BASE_URL n'est pas défini dans les variables d'environnement");
+  }
 const TraiterUCourrier = () => {
   const [courrier, setCourrier] = useState({
     reponse: '',
@@ -14,7 +17,7 @@ const TraiterUCourrier = () => {
 
   useEffect(() => {
     // Simuler la récupération des informations du courrier sélectionné
-    // axios.get('http://localhost:5000/api/courriers/1')
+    // axios.get(`${API_BASE_URL}/api/courriers/1` )
     //   .then(response => setCourrier(response.data))
     //   .catch(error => console.error(error));
 
@@ -54,7 +57,7 @@ const TraiterUCourrier = () => {
     formData.append("reponse", courrier.reponse);
     formData.append("listeDiffusion", JSON.stringify(courrier.listeDiffusion));
 
-    axios.post('http://localhost:5000/api/courriers', formData, {
+    axios.post(`${API_BASE_URL}/api/courriers` , formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }

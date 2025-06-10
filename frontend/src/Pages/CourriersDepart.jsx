@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar'; // Assurez-vous d'avoir le composant Sidebar
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  if (!API_BASE_URL) {
+    console.error("REACT_APP_API_BASE_URL n'est pas défini dans les variables d'environnement");
+  }
 // Fonction pour récupérer les informations de l'utilisateur connecté
 function getCookie(name) {
   const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
@@ -17,7 +20,7 @@ const CourriersDepart = () => {
   const navigate = useNavigate();
   useEffect(() => {
     // Étape 1 : Récupération des infos utilisateur connecté
-    axios.get('http://localhost:5000/auth/me', { withCredentials: true })
+    axios.get(`${API_BASE_URL}/auth/me` , { withCredentials: true })
       .then(res => setUtilisateur(res.data))
       .catch(err => {
         console.error('Erreur récupération utilisateur connecté', err);
@@ -29,7 +32,7 @@ const CourriersDepart = () => {
     // Étape 2 : Une fois utilisateur défini, récupérer les courriers départ
     if (utilisateur) {
       axios.post(
-        'http://localhost:5000/courrier/get_courriers',
+        `${API_BASE_URL}/courrier/get_courriers`
         { type_courrier: 'depart' },
         { withCredentials: true }
       )
@@ -45,7 +48,7 @@ const CourriersDepart = () => {
   const handleLogout = async () => {
     try {
       const csrfToken = getCookie('csrf_access_token');
-      const res = await axios.post('http://localhost:5000/auth/logout', {}, {
+      const res = await axios.post(`${API_BASE_URL}/auth/logout` , {}, {
         headers: { 'X-CSRF-TOKEN': csrfToken },
         withCredentials: true
       });

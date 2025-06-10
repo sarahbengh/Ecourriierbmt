@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 // import Sidebar from './Sidebar';
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  if (!API_BASE_URL) {
+    console.error("REACT_APP_API_BASE_URL n'est pas défini dans les variables d'environnement");
+  }
 const courriers = [
   { id: 1, title: "Invitation à la conférence annuelle du port", status: "Arrivés" },
   { id: 2, title: "Rapport mensuel des activités portuaires", status: "Arrivés" },

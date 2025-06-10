@@ -1,6 +1,9 @@
 import  { useEffect, useState } from 'react'
 import axios from 'axios'
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  if (!API_BASE_URL) {
+    console.error("REACT_APP_API_BASE_URL n'est pas défini dans les variables d'environnement");
+  }
 const Myprofile = () => {
   const [user, setUser] = useState(null)
   const [formData, setFormData] = useState({
@@ -14,7 +17,7 @@ const Myprofile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/auth/me', {
+        const res = await axios.get(`${API_BASE_URL}/auth/me` , {
           withCredentials: true
         })
         setUser(res.data)
