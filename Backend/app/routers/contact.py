@@ -14,16 +14,17 @@ google_bp = Blueprint('google_auth', __name__)
 # 📌 Autoriser HTTP pour OAuth en local
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 SECRET_KEY = "chaima"
-# 📌 Vérification du fichier credentials.json
-CREDENTIALS_FILE = "C:\\Users\\Personnel\\Documents\\GitHub\\ecourrierbmt\\Backend\\app\\credentials.json"
-if not os.path.exists(CREDENTIALS_FILE):
-    raise FileNotFoundError(f"Fichier credentials.json introuvable : {CREDENTIALS_FILE}")
 
-flow = Flow.from_client_secrets_file(
-    CREDENTIALS_FILE,
-    scopes=["https://www.googleapis.com/auth/contacts.readonly"],
-    redirect_uri="http://localhost:5000/callback"
-)
+# # 📌 Vérification du fichier credentials.json
+# CREDENTIALS_FILE = "C:\\Users\\Personnel\\Documents\\GitHub\\ecourrierbmt\\Backend\\app\\credentials.json"
+# if not os.path.exists(CREDENTIALS_FILE):
+#     raise FileNotFoundError(f"Fichier credentials.json introuvable : {CREDENTIALS_FILE}")
+
+# flow = Flow.from_client_secrets_file(
+#     CREDENTIALS_FILE,
+#     scopes=["https://www.googleapis.com/auth/contacts.readonly"],
+#     redirect_uri="http://localhost:5000/callback"
+# )
  
 
 def credentials_to_dict(credentials):
