@@ -52,7 +52,8 @@ const LoginPage = () => {
     <div
       className="min-h-screen flex items-center justify-center"
       style={{
-        backgroundImage: `url('../../public/login.jpg')`,
+        backgroundImage: `url('/login.jpg')`, // Note le '/' au début et l'absence de 'public/'
+        // backgroundImage: `url('../../public/login.jpg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
