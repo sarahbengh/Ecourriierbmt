@@ -1,3 +1,4 @@
+# backend/config.py
 import os
 
 API_KEY = os.getenv("API_KEY")
@@ -9,11 +10,18 @@ os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 class Config:
     # Clé secrète pour la sécurité de Flask
-    SECRET_KEY = os.urandom(20)
+    SECRET_KEY = os.urandom(20) # For production, use an environment variable for SECRET_KEY too!
 
     # Configuration de la base de données distante (Freesqldatabase)
+    # Récupère les infos de la base de données via les variables d'environnement
+    DB_USER = os.getenv("DB_USER", "sql12784037") # Default for local, but will be overridden by Render ENV
+    DB_PASSWORD = os.getenv("DB_PASSWORD", "cgWXcaYhgn") # Default for local, but will be overridden by Render ENV
+    DB_HOST = os.getenv("DB_HOST", "sql12.freesqldatabase.com")
+    DB_PORT = os.getenv("DB_PORT", "3306")
+    DB_NAME = os.getenv("DB_NAME", "sql12784037")
+
     SQLALCHEMY_DATABASE_URI = (
-        'mysql+pymysql://sql12784037:cgWXcaYhgn@sql12.freesqldatabase.com:3306/sql12784037'
+        f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -24,4 +32,3 @@ class Config:
     MAIL_USE_TLS = False
     MAIL_USERNAME = None
     MAIL_PASSWORD = None
-
