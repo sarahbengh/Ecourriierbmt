@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+// Assurez-vous que l'URL de l'API est correctement définie dans vos variables d'environnement
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   if (!API_BASE_URL) {
     console.error("REACT_APP_API_BASE_URL n'est pas défini dans les variables d'environnement");
@@ -52,7 +53,9 @@ const LoginPage = () => {
     <div
       className="min-h-screen flex items-center justify-center"
       style={{
-        backgroundImage: `url('/login.jpg')`, // Note le '/' au début et l'absence de 'public/'
+        backgroundImage: `url('/login.jpg')`, // Le '/' signifie "à la racine du site web"
+
+        // backgroundImage: `url('/login.jpg')`, // Note le '/' au début et l'absence de 'public/'
         // backgroundImage: `url('../../public/login.jpg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
