@@ -32,7 +32,7 @@ def create_app():
     app.config['JWT_CSRF_IN_COOKIES'] = True
 
     # CORS avec support credentials pour les cookies cross-origin
-   from flask_cors import CORS
+
 
 CORS(app, supports_credentials=True, origins=[
     "http://localhost:5173",
