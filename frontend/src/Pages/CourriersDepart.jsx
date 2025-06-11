@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar'; // Assurez-vous d'avoir le composant Sidebar
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-  if (!API_BASE_URL) {
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;  if (!API_BASE_URL) {
     console.error("REACT_APP_API_BASE_URL n'est pas défini dans les variables d'environnement");
   }
 // Fonction pour récupérer les informations de l'utilisateur connecté

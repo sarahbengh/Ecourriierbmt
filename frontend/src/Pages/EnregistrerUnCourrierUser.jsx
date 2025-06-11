@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import SidebarUser from '../components/SidebarUser';
 import { useNavigate } from 'react-router-dom';
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-  if (!API_BASE_URL) {
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;  if (!API_BASE_URL) {
     console.error("REACT_APP_API_BASE_URL n'est pas défini dans les variables d'environnement");
   }
 function getCookie(name) {

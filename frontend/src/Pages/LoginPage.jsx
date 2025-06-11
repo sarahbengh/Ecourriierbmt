@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 // Assurez-vous que l'URL de l'API est correctement définie dans vos variables d'environnement
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-  if (!API_BASE_URL) {
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;  if (!API_BASE_URL) {
     console.error("REACT_APP_API_BASE_URL n'est pas défini dans les variables d'environnement");
   }
 const LoginPage = () => {
