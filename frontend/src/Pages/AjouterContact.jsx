@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 if (!API_BASE_URL) {
   console.error("REACT_APP_API_BASE_URL n'est pas défini dans les variables d'environnement");
 }
@@ -14,10 +15,10 @@ const AjouterContact = () => {
     adresse: '',
     organisation: ''
   });
+
   const [message, setMessage] = useState('');
   const [currentUser, setCurrentUser] = useState(null);
 
-  // Récupère l'utilisateur connecté
   useEffect(() => {
     axios.get(`${API_BASE_URL}/auth/me`, { withCredentials: true })
       .then(res => setCurrentUser(res.data))
@@ -26,7 +27,6 @@ const AjouterContact = () => {
       });
   }, []);
 
-  // Fonction de déconnexion
   const handleLogout = async () => {
     try {
       await axios.post(`${API_BASE_URL}/auth/logout`, {}, { withCredentials: true });
@@ -36,7 +36,6 @@ const AjouterContact = () => {
     }
   };
 
-  // Soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!currentUser || !currentUser.id) {
@@ -56,8 +55,8 @@ const AjouterContact = () => {
         {
           withCredentials: true,
           headers: {
-            'X-User-Name': `${currentUser.nom} ${currentUser.prenom}`,
-            'X-User-Role': currentUser.role
+            'X-User-Name': `${currentUser?.nom} ${currentUser?.prenom}`,
+            'X-User-Role': currentUser?.role
           }
         }
       );
@@ -94,9 +93,7 @@ const AjouterContact = () => {
               <p className="text-sm text-gray-500">{currentUser.role}</p>
               <div className="mt-2 space-y-2">
                 <button className="text-blue-600 hover:underline w-full text-left">Mon profil</button>
-                <button onClick={handleLogout} className="text-red-500 hover:underline w-full text-left">
-                  Déconnexion
-                </button>
+                <button onClick={handleLogout} className="text-red-500 hover:underline w-full text-left">Déconnexion</button>
               </div>
             </div>
           </div>
