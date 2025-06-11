@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-  if (!API_BASE_URL) {
-    console.error("REACT_APP_API_BASE_URL n'est pas défini dans les variables d'environnement");
-  }
+if (!API_BASE_URL) {
+  console.error("REACT_APP_API_BASE_URL n'est pas défini dans les variables d'environnement");
+}
+
 const AjouterContact = () => {
   const [formData, setFormData] = useState({
     nom_complet: '',
@@ -12,28 +14,29 @@ const AjouterContact = () => {
     adresse: '',
     organisation: ''
   });
-
   const [message, setMessage] = useState('');
   const [currentUser, setCurrentUser] = useState(null);
 
+  // Récupère l'utilisateur connecté
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/auth/me` , { withCredentials: true })
+    axios.get(`${API_BASE_URL}/auth/me`, { withCredentials: true })
       .then(res => setCurrentUser(res.data))
       .catch(err => {
         console.error("Erreur récupération user connecté", err);
       });
   }, []);
 
- const handleLogout = async () => {
-  try {
-    await axios.post(`${API_BASE_URL}/auth/logout`, {}, { withCredentials: true });
-    window.location.href = "/";
-  } catch (err) {
-    console.error("Erreur lors de la déconnexion :", err);
-  }
-};
+  // Fonction de déconnexion
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${API_BASE_URL}/auth/logout`, {}, { withCredentials: true });
+      window.location.href = "/";
+    } catch (err) {
+      console.error("Erreur lors de la déconnexion :", err);
+    }
+  };
 
-
+  // Soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!currentUser || !currentUser.id) {
@@ -44,28 +47,17 @@ const AjouterContact = () => {
     try {
       const dataToSend = {
         ...formData,
-        utilisateur_id: currentUser.id // ou currentUser._id selon ta base de données
+        utilisateur_id: currentUser.id
       };
-// 1. Make sure the axios call is properly closed
-const res = await axios.post(`${API_BASE_URL}/something`, data, { withCredentials: true });
 
-// 2. Then define your function
-const handleLogout = async () => {
-  try {
-    await axios.post(`${API_BASE_URL}/auth/logout`, {}, { withCredentials: true });
-    // do something after logout
-  } catch (error) {
-    console.error("Logout failed:", error);
-  }
-};
-
-add-contact',
+      const res = await axios.post(
+        `${API_BASE_URL}/add-contact`,
         dataToSend,
         {
           withCredentials: true,
           headers: {
-            'X-User-Name': `${currentUser?.nom} ${currentUser?.prenom}`,
-            'X-User-Role': currentUser?.role
+            'X-User-Name': `${currentUser.nom} ${currentUser.prenom}`,
+            'X-User-Role': currentUser.role
           }
         }
       );
@@ -102,7 +94,9 @@ add-contact',
               <p className="text-sm text-gray-500">{currentUser.role}</p>
               <div className="mt-2 space-y-2">
                 <button className="text-blue-600 hover:underline w-full text-left">Mon profil</button>
-                <button onClick={handleLogout} className="text-red-500 hover:underline w-full text-left">Déconnexion</button>
+                <button onClick={handleLogout} className="text-red-500 hover:underline w-full text-left">
+                  Déconnexion
+                </button>
               </div>
             </div>
           </div>
