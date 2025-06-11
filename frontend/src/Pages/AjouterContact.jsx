@@ -46,16 +46,19 @@ const AjouterContact = () => {
         ...formData,
         utilisateur_id: currentUser.id // ou currentUser._id selon ta base de données
       };
+// 1. Make sure the axios call is properly closed
+const res = await axios.post(`${API_BASE_URL}/something`, data, { withCredentials: true });
 
-      const res = await axios.post(
-       const handleLogout = async () => {
+// 2. Then define your function
+const handleLogout = async () => {
   try {
     await axios.post(`${API_BASE_URL}/auth/logout`, {}, { withCredentials: true });
-    window.location.href = "/";
-  } catch (err) {
-    console.error("Erreur lors de la déconnexion :", err);
+    // do something after logout
+  } catch (error) {
+    console.error("Logout failed:", error);
   }
 };
+
 add-contact',
         dataToSend,
         {
