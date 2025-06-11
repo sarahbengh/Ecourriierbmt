@@ -169,7 +169,7 @@ const AjouterContact = () => {
           </div>
 
           <button type="submit" className="bg-green-600 text-white py-2 px-4 rounded mt-4">
-            Ajouter Contact
+            Ajouter Contacct
           </button>
         </form>
       </div>
