@@ -53,10 +53,8 @@ const LoginPage = () => {
     <div
       className="min-h-screen flex items-center justify-center"
       style={{
-        backgroundImage: `url('/login.jpg')`, // Le '/' signifie "à la racine du site web"
+        backgroundImage: `url('/login.webp')`, // Le '/' signifie "à la racine du site web"
 
-        // backgroundImage: `url('/login.jpg')`, // Note le '/' au début et l'absence de 'public/'
-        // backgroundImage: `url('../../public/login.jpg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
