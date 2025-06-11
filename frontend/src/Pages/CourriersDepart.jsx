@@ -28,21 +28,22 @@ const CourriersDepart = () => {
       });
   }, []);
   
-  useEffect(() => {
-    // Étape 2 : Une fois utilisateur défini, récupérer les courriers départ
-    if (utilisateur) {
-      axios.post(
-        `${API_BASE_URL}/courrier/get_courriers`
-        { type_courrier: 'depart' },
-        { withCredentials: true }
-      )
-      .then(res => setCourriersDepart(res.data))
-      .catch(err => {
-        console.error('Erreur récupération courriers départ', err);
-        setError('Impossible de récupérer les courriers départ');
-      });
-    }
-  }, [utilisateur]);
+useEffect(() => {
+  // Étape 2 : Une fois utilisateur défini, récupérer les courriers départ
+  if (utilisateur) {
+    axios.post(
+      `${API_BASE_URL}/courrier/get_courriers`,
+      { type_courrier: 'depart' },
+      { withCredentials: true }
+    )
+    .then(res => setCourriersDepart(res.data))
+    .catch(err => {
+      console.error('Erreur récupération courriers départ', err);
+      setError('Impossible de récupérer les courriers départ');
+    });
+  }
+}, [utilisateur]);
+
   
 
   const handleLogout = async () => {
